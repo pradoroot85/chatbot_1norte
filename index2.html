@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot Example</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+      }
+
+      label {
+        margin-bottom: 10px;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      input[type="file"] {
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      input[type="submit"] {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        background-color: #007bff;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #0069d9;
+      }
+
+      .chat {
+        margin-top: 20px;
+      }
+
+      .logo {
+        background-color: #007bff;
+        display: inline-block;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      .logo img {
+        display: block;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <img src="https://static.wixstatic.com/media/76d4fa_46606fb0b9814873b109c00f20c81601~mv2.png/v1/fill/w_147,h_40,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/logo%20branca.png" alt="Chatbot logo" width="147" height="40">
+      </div>
+      <h1>Bem-vindo ao nosso chatbot</h1>
+      <form onsubmit="return false;">
+        <label for="user-input">Digite uma pergunta!</label>
+        <input type="text" id="user-input">
+        <input type="file" id="image-input">
+        <input type="submit" value="Enviar" onclick="sendMessage()">
+      </form>
+      <div class="chat" id="chat"></div>
+    </div>
+    <script>
+      function sendMessage() {
+        var userInput = document.getElementById("user-input").value;
+        var imageInput = document.getElementById("image-input").files[0];
+        document.getElementById("user-input").value = "";
+        document.getElementById("image-input").value = "";
+        document.getElementById("chat").innerHTML += "<p><strong>Você:</strong> " + userInput + "</p>";
+        if (imageInput) {
+          var reader = new FileReader();
+          reader.onload = function(event) {
+            document.getElementById("chat").innerHTML += "<img src='" + event.target.result + "'><br>";
+          };
+          reader.readAsDataURL(imageInput);
+        }
+
+        var responses = [
+          "Sinto muito, não entendi sua pergunta.",
+          "Desculpe, não posso ajudar com isso.",
+          "Talvez você possa tentar outra abordagem.",
+          "Não tenho informações suficientes para responder sua pergunta.",
+          "Acho que não sou a pessoa certa para responder essa pergunta."
+        ];
+        var botResponse = responses[Math.floor(Math.random() * responses.length)];
+        document.getElementById("chat").innerHTML += "<p><strong>Chatbot:</strong> " + botResponse + "</p>";
+      }
+    </script>
+  </body>
+</html>
